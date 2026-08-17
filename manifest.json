@@ -1,0 +1,9 @@
+{
+  "name": "Brackroot",
+  "version": "0.1.0",
+  "minAppVersion": "1.0.0",
+  "author": "Ellene & Claude",
+  "authorUrl": "https://github.com/the-vfp/brackroot-obsidian-theme",
+  "description": "A cozy pixel-storybook theme from the Brackroot Academy design system. Day (warm cream) and Night (plum-dark), pixel chrome over a storybook serif, hard edges everywhere.",
+  "modes": ["light", "dark"]
+}
