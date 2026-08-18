@@ -460,6 +460,28 @@ body.bk-thin-frames {
   --callout-blend-mode:     normal;
   --callout-title-weight:   400;
 
+  /* Family tuples through Obsidian's own per-type variables — core assigns
+     `--callout-color: var(--callout-<type>)` at higher specificity than any
+     bare [data-callout] broadcast, so THIS is the layer that must carry the
+     palette. The section-7 broadcasts remain for custom types + titles. */
+  --callout-note: 78, 106, 155;     --callout-info: 78, 106, 155;
+  --callout-todo: 90, 81, 144;
+  --callout-abstract: 154, 160, 212; --callout-summary: 154, 160, 212;
+  --callout-tldr: 154, 160, 212;     --callout-tip: 154, 160, 212;
+  --callout-hint: 154, 160, 212;
+  --callout-success: 110, 138, 78;  --callout-check: 110, 138, 78;
+  --callout-done: 110, 138, 78;
+  --callout-question: 233, 185, 73; --callout-help: 233, 185, 73;
+  --callout-faq: 233, 185, 73;
+  --callout-warning: 232, 137, 58;  --callout-caution: 232, 137, 58;
+  --callout-attention: 232, 137, 58;
+  --callout-important: 206, 138, 146;
+  --callout-fail: 158, 59, 59;      --callout-failure: 158, 59, 59;
+  --callout-missing: 158, 59, 59;   --callout-danger: 158, 59, 59;
+  --callout-error: 158, 59, 59;     --callout-bug: 158, 59, 59;
+  --callout-example: 110, 74, 107;
+  --callout-quote: 154, 160, 166;
+
   /* File explorer */
   --nav-item-color:               var(--bk-ink);
   --nav-item-color-hover:         var(--bk-ink-strong);
@@ -1177,6 +1199,13 @@ body.bk-star-studs .callout-content::after  { bottom: -7px; right: -7px; }
 .cm-embed-block.cm-callout:has([data-callout="example" i]) { --callout-color: 110, 74, 107; }
 .cm-embed-block.cm-callout:has([data-callout="quote" i]),
 .cm-embed-block.cm-callout:has([data-callout="cite" i]) { --callout-color: 154, 160, 166; }
+
+/* Live preview: the CM wrapper block clips overflow, which amputates the
+   keyline + hard drop and turns the corner stars into scrollbars. Let the
+   frame breathe. */
+.cm-embed-block.cm-callout {
+  overflow: visible !important;
+}
 
 /* Edit mode, cursor inside (per-line HyperMD): honest neutral wash */
 .HyperMD-callout {
