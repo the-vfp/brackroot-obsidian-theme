@@ -1156,6 +1156,10 @@ body.bk-star-studs .callout-icon::after   { bottom: -7px; right: -7px; }
   --callout-color: 110, 74, 107;  --bk-co-title: #543551; }
 [data-callout="quote" i], [data-callout="cite" i] {
   --callout-color: 154, 160, 166; --bk-co-title: #5C6167; }
+/* Ellene's custom Admonition type — adopted into the family system (its
+   Admonition color-injection is disabled; the tan lives here now) */
+[data-callout="chatgpt" i] {
+  --callout-color: 214, 183, 158; --bk-co-title: #7E603F; }
 
 /* Night lifts — precomputed mixes of base toward cream ink, AA on the dark
    13% tints (brendan @50%, danger/sophia/indigo @45%, rest @55%) */
@@ -1176,6 +1180,7 @@ body.bk-star-studs .callout-icon::after   { bottom: -7px; right: -7px; }
 .theme-dark [data-callout="error" i], .theme-dark [data-callout="bug" i] { --bk-co-title: #C9978C; }
 .theme-dark [data-callout="example" i] { --bk-co-title: #B49EA1; }
 .theme-dark [data-callout="quote" i], .theme-dark [data-callout="cite" i] { --bk-co-title: #BFBEB8; }
+.theme-dark [data-callout="chatgpt" i] { --bk-co-title: #E0CAB3; }
 
 /* Live preview: broadcast the family tuple up to the CM6 wrapper so the
    widget carries the right color in editing state too */
@@ -1206,6 +1211,7 @@ body.bk-star-studs .callout-icon::after   { bottom: -7px; right: -7px; }
 .cm-embed-block.cm-callout:has([data-callout="example" i]) { --callout-color: 110, 74, 107; }
 .cm-embed-block.cm-callout:has([data-callout="quote" i]),
 .cm-embed-block.cm-callout:has([data-callout="cite" i]) { --callout-color: 154, 160, 166; }
+.cm-embed-block.cm-callout:has([data-callout="chatgpt" i]) { --callout-color: 214, 183, 158; }
 
 /* Live preview: the CM wrapper block clips overflow, which amputates the
    keyline + hard drop and turns the corner stars into scrollbars. Let the
