@@ -624,7 +624,7 @@ body.bk-body-pixel .markdown-source-view .cm-em {
 .markdown-rendered h1::before {
   content: '✦';
   display: block;
-  font-family: var(--bk-font-micro);
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
   font-size: var(--bk-micro-size);
   letter-spacing: 0.3em;
   color: var(--bk-stardust-deep);
@@ -886,7 +886,7 @@ body.bk-finis .markdown-reading-view > .markdown-preview-view > .markdown-previe
   content: '✦ ⬥ ✦';
   display: block;
   text-align: center;
-  font-family: var(--bk-font-micro);
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
   font-size: 10px;
   letter-spacing: 0.5em;
   color: var(--bk-stud);
@@ -952,7 +952,9 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
 }
 /* Forwarded [>] — indigo fill, cream chevrons */
 .markdown-preview-view li[data-task=">"] input.task-list-item-checkbox,
-.HyperMD-task-line[data-task=">"] input.task-list-item-checkbox {
+.markdown-preview-view li[data-task=">"] input.task-list-item-checkbox:checked,
+.HyperMD-task-line[data-task=">"] input.task-list-item-checkbox,
+.HyperMD-task-line[data-task=">"] input.task-list-item-checkbox:checked {
   background-color: var(--bk-indigo) !important;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBF4E6' stroke-width='3.4' stroke-linecap='square'><polyline points='6 5 12 12 6 19'/><polyline points='13 5 19 12 13 19'/></svg>") !important;
   background-size: 66% !important;
@@ -1007,7 +1009,9 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
 }
 /* Cancelled [-] — pewter, ✗ */
 .markdown-preview-view li[data-task="-"] input.task-list-item-checkbox,
-.HyperMD-task-line[data-task="-"] input.task-list-item-checkbox {
+.markdown-preview-view li[data-task="-"] input.task-list-item-checkbox:checked,
+.HyperMD-task-line[data-task="-"] input.task-list-item-checkbox,
+.HyperMD-task-line[data-task="-"] input.task-list-item-checkbox:checked {
   background-color: #E3E5E7 !important;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236E747A' stroke-width='3.4' stroke-linecap='square'><path d='M6 6l12 12M18 6L6 18'/></svg>") !important;
   background-size: 62% !important;
@@ -1058,30 +1062,33 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
 }
 /* Pixel-star corners (Style Settings `bk-star-studs`, default on).
    Four pseudos spread across the callout's children, all positioned
-   against .callout — title-only callouts simply lose the bottom pair. */
+   against .callout. Hosts are .callout / .callout-title / .callout-icon —
+   NEVER .callout-content, which Obsidian makes a scroll container (pseudos
+   there manifest as phantom scrollbars). Glyph font is Segoe UI Symbol:
+   the embedded Silkscreen latin subset has no ✦ and renders a boxy plus. */
 body.bk-star-studs .callout::after,
 body.bk-star-studs .callout-title::before,
-body.bk-star-studs .callout-content::before,
-body.bk-star-studs .callout-content::after {
+body.bk-star-studs .callout-icon::before,
+body.bk-star-studs .callout-icon::after {
   content: '✦';
   position: absolute;
-  font-family: var(--bk-font-micro);
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
   font-size: 10px;
   line-height: 1;
   letter-spacing: 0;
   color: var(--bk-stud);
   pointer-events: none;
 }
-body.bk-star-studs .callout::after          { top: -7px;    left: -7px; }
-body.bk-star-studs .callout-title::before   { top: -7px;    right: -7px; }
-body.bk-star-studs .callout-content::before { bottom: -7px; left: -7px; }
-body.bk-star-studs .callout-content::after  { bottom: -7px; right: -7px; }
+body.bk-star-studs .callout::after        { top: -7px;    left: -7px; }
+body.bk-star-studs .callout-title::before { top: -7px;    right: -7px; }
+body.bk-star-studs .callout-icon::before  { bottom: -7px; left: -7px; }
+body.bk-star-studs .callout-icon::after   { bottom: -7px; right: -7px; }
 /* Three registers inside a callout, loud → quiet:
    chip (micro-caps type label) → title text (mixed-case pixel) → body (Literata).
    The 8px micro-caps treatment lives on the auto-derived chip, where a
    two-word label can afford it — title text reads at reading size. */
 .callout::before {
-  content: '✦ ' attr(data-callout);
+  content: attr(data-callout);   /* no ✦ prefix — Silkscreen's subset lacks the glyph */
   display: inline-block;
   font-family: var(--bk-font-micro);
   font-size: 10px;   /* a step up from the 8px micro — chips carry family color, let them speak */
@@ -1313,6 +1320,7 @@ body.bk-section-colors.theme-dark .nav-folder-title[data-path^="4."]:not([data-p
 .workspace-tab-header-inner-title { font-family: var(--bk-font-pixel); font-size: 13px; }
 .workspace-tab-header.mod-pinned .workspace-tab-header-inner-title::before {
   content: '◆ ';
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
   color: var(--bk-stardust-deep);
   font-size: 9px;
 }
@@ -1339,7 +1347,10 @@ body.bk-section-colors.theme-dark .nav-folder-title[data-path^="4."]:not([data-p
 /* Word count as Stardust — writing accumulates ✦ */
 .status-bar-item.plugin-wordcount { color: var(--bk-stardust-ink); }
 .theme-dark .status-bar-item.plugin-wordcount { color: var(--bk-stardust); }
-.status-bar-item.plugin-wordcount::before { content: '✦ '; }
+.status-bar-item.plugin-wordcount::before {
+  content: '✦ ';
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+}
 
 /* --------------------------------------------------------------------------
    10. RIGHT SIDEBAR — backlinks, outline, tags
