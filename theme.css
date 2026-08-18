@@ -91,6 +91,33 @@ settings:
         step: 1
         format: px
     -
+        id: bk-star-studs
+        title: Pixel-star corners
+        description: Tiny ✦ stars at the corners of callouts. Title-only callouts get the top pair.
+        type: class-toggle
+        default: true
+    -
+        id: bk-finis
+        title: Finis mark
+        description: A small ✦ ⬥ ✦ after the last block of a note in reading view — the page says it's done.
+        type: class-toggle
+        default: true
+    -
+        id: bk-section-colors
+        title: Section-colored file explorer
+        description: Top-level vault sections carry their triad tint (Personal gold, Work ink-blue, Stories rose, Tabletop plum, Ren'py periwinkle). Files and subfolders stay plain ink.
+        type: class-toggle
+        default: true
+    -
+        id: bk-folder-dim
+        title: Collapsed folder dimming
+        description: How much closed folders fade so the sidebar's current shape reads at a glance. 0 = no dim; higher = heavier fade on collapsed folders.
+        type: variable-number-slider
+        default: 34
+        min: 0
+        max: 70
+        step: 1
+    -
         id: bk-section-accent
         title: Accent
         type: heading
@@ -153,6 +180,7 @@ settings:
   --bk-stardust-deep:    #C9952F;   /* fills/keylines only — NEVER text on light */
   --bk-stardust-soft:    #F8E7BC;
   --bk-stardust-ink:     #91671A;   /* errata: AA text-gold on cream */
+  --bk-stud:             #C9952F;   /* decorative star-stud gold */
 
   /* Indigo — Ellene's wax */
   --bk-indigo:      #41396E;
@@ -215,6 +243,7 @@ body.bk-dusk.theme-light {
   --bk-stardust-deep:    #C9952F;
   --bk-stardust-soft:    #F8E7BC;
   --bk-stardust-ink:     #91671A;
+  --bk-stud:             #E9B949;   /* studs ride full gold on dark */
 
   --bk-indigo:      #41396E;
   --bk-indigo-soft: #5A5190;
@@ -829,6 +858,19 @@ body.bk-plain-hr .markdown-source-view .HyperMD-hr::before {
 }
 .footnote-link { color: var(--bk-link); }
 
+/* Finis mark (Style Settings `bk-finis`, default on) — the page says it's
+   done. Direct-child chain keeps it out of embeds, canvas cards, backlinks. */
+body.bk-finis .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer::after {
+  content: '✦ ⬥ ✦';
+  display: block;
+  text-align: center;
+  font-family: var(--bk-font-micro);
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--bk-stud);
+  margin: 28px 0 10px;
+}
+
 /* --------------------------------------------------------------------------
    6. CHECKBOXES — 16px pixel squares
    Unchecked: recessed surface. Checked: gold fill + dark ✓ (or ✦ via the
@@ -869,6 +911,15 @@ input[type="checkbox"].task-list-item-checkbox:checked,
   background-repeat: no-repeat !important;
   background-position: center !important;
   box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+  animation: bk-hop .18s steps(2, end);
+}
+@keyframes bk-hop {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  input[type="checkbox"].task-list-item-checkbox:checked { animation: none; }
 }
 /* Style Settings: ✦ star glyph instead of the checkmark */
 body.bk-star-check input[type="checkbox"].task-list-item-checkbox:checked,
@@ -883,6 +934,51 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
   background-color: var(--bk-indigo) !important;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBF4E6' stroke-width='3.4' stroke-linecap='square'><polyline points='6 5 12 12 6 19'/><polyline points='13 5 19 12 13 19'/></svg>") !important;
   background-size: 66% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+}
+/* Extended states — each gets a triad fill (no strikethrough on these) */
+.markdown-preview-view li[data-task="?"] input.task-list-item-checkbox,
+.markdown-preview-view li[data-task="?"] input.task-list-item-checkbox:checked,
+.HyperMD-task-line[data-task="?"] input.task-list-item-checkbox,
+.HyperMD-task-line[data-task="?"] input.task-list-item-checkbox:checked {
+  background-color: #9AA0D4 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBF4E6' stroke-width='3' stroke-linecap='square'><path d='M8.5 9.5a3.5 3.5 0 1 1 5.2 3c-1.2.7-1.7 1.4-1.7 2.5'/><path d='M12 19h.01'/></svg>") !important;
+  background-size: 72% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+}
+.markdown-preview-view li[data-task="!"] input.task-list-item-checkbox,
+.markdown-preview-view li[data-task="!"] input.task-list-item-checkbox:checked,
+.HyperMD-task-line[data-task="!"] input.task-list-item-checkbox,
+.HyperMD-task-line[data-task="!"] input.task-list-item-checkbox:checked {
+  background-color: #E8893A !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234E3A2C' stroke-width='3.4' stroke-linecap='square'><path d='M12 4v10'/><path d='M12 19h.01'/></svg>") !important;
+  background-size: 72% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+}
+.markdown-preview-view li[data-task="*"] input.task-list-item-checkbox,
+.markdown-preview-view li[data-task="*"] input.task-list-item-checkbox:checked,
+.HyperMD-task-line[data-task="*"] input.task-list-item-checkbox,
+.HyperMD-task-line[data-task="*"] input.task-list-item-checkbox:checked {
+  background-color: var(--bk-stardust) !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234E3A2C'><path d='M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z'/></svg>") !important;
+  background-size: 78% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+}
+.markdown-preview-view li[data-task="i"] input.task-list-item-checkbox,
+.markdown-preview-view li[data-task="i"] input.task-list-item-checkbox:checked,
+.HyperMD-task-line[data-task="i"] input.task-list-item-checkbox,
+.HyperMD-task-line[data-task="i"] input.task-list-item-checkbox:checked {
+  background-color: #4E6A9B !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBF4E6' stroke-width='3.4' stroke-linecap='square'><path d='M12 5h.01'/><path d='M12 10v9'/></svg>") !important;
+  background-size: 68% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
@@ -930,6 +1026,7 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
    `!important` on bg: the chatgpt-emoji-callout snippet wins otherwise.
    -------------------------------------------------------------------------- */
 .callout {
+  position: relative;   /* anchors the chip's star-stud pseudos */
   border: 0;
   border-radius: 0;
   padding: 12px 16px;
@@ -937,6 +1034,26 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
   box-shadow: 0 0 0 var(--bk-keyline) rgb(var(--callout-color)), var(--bk-drop);
   margin: 16px 0;
 }
+/* Pixel-star corners (Style Settings `bk-star-studs`, default on).
+   Four pseudos spread across the callout's children, all positioned
+   against .callout — title-only callouts simply lose the bottom pair. */
+body.bk-star-studs .callout::after,
+body.bk-star-studs .callout-title::before,
+body.bk-star-studs .callout-content::before,
+body.bk-star-studs .callout-content::after {
+  content: '✦';
+  position: absolute;
+  font-family: var(--bk-font-micro);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--bk-stud);
+  pointer-events: none;
+}
+body.bk-star-studs .callout::after          { top: -7px;    left: -7px; }
+body.bk-star-studs .callout-title::before   { top: -7px;    right: -7px; }
+body.bk-star-studs .callout-content::before { bottom: -7px; left: -7px; }
+body.bk-star-studs .callout-content::after  { bottom: -7px; right: -7px; }
 /* Three registers inside a callout, loud → quiet:
    chip (micro-caps type label) → title text (mixed-case pixel) → body (Literata).
    The 8px micro-caps treatment lives on the auto-derived chip, where a
@@ -1101,6 +1218,40 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
   content: '▸';
 }
 
+/* Collapsed-folder dimming — ported from Spark. Slider `bk-folder-dim`
+   (0–70, default 34); at 0 the math collapses to 1.0 everywhere. */
+.nav-folder.is-collapsed > .nav-folder-title .nav-folder-title-content {
+  opacity: calc(1 - var(--bk-folder-dim, 34) / 100) !important;
+  filter:
+    saturate(calc(1 - var(--bk-folder-dim, 34) / 226))
+    brightness(calc(1 - var(--bk-folder-dim, 34) / 340)) !important;
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+.nav-folder:not(.is-collapsed) > .nav-folder-title .nav-folder-title-content {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Section-colored explorer (Style Settings `bk-section-colors`, default on).
+   Top-level sections only — the :not([data-path*="/"]) guard keeps subfolders
+   plain. Text = AA ink-variant per scheme; band = triad base. Vault-specific
+   by design (this is Ellene's map). */
+body.bk-section-colors .nav-folder-title[data-path^="0."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #E9B949; }
+body.bk-section-colors .nav-folder-title[data-path^="1."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #4E6A9B; }
+body.bk-section-colors .nav-folder-title[data-path^="2."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #CE8A92; }
+body.bk-section-colors .nav-folder-title[data-path^="3."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #6E4A6B; }
+body.bk-section-colors .nav-folder-title[data-path^="4."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #9AA0D4; }
+body.bk-section-colors.theme-light .nav-folder-title[data-path^="0."]:not([data-path*="/"]) .nav-folder-title-content { color: #91671A; }
+body.bk-section-colors.theme-light .nav-folder-title[data-path^="1."]:not([data-path*="/"]) .nav-folder-title-content { color: #3A4F77; }
+body.bk-section-colors.theme-light .nav-folder-title[data-path^="2."]:not([data-path*="/"]) .nav-folder-title-content { color: #A15661; }
+body.bk-section-colors.theme-light .nav-folder-title[data-path^="3."]:not([data-path*="/"]) .nav-folder-title-content { color: #543551; }
+body.bk-section-colors.theme-light .nav-folder-title[data-path^="4."]:not([data-path*="/"]) .nav-folder-title-content { color: #585D90; }
+body.bk-section-colors.theme-dark .nav-folder-title[data-path^="0."]:not([data-path*="/"]) .nav-folder-title-content { color: #EBCB85; }
+body.bk-section-colors.theme-dark .nav-folder-title[data-path^="1."]:not([data-path*="/"]) .nav-folder-title-content { color: #9EA6B5; }
+body.bk-section-colors.theme-dark .nav-folder-title[data-path^="2."]:not([data-path*="/"]) .nav-folder-title-content { color: #DCB2AD; }
+body.bk-section-colors.theme-dark .nav-folder-title[data-path^="3."]:not([data-path*="/"]) .nav-folder-title-content { color: #B49EA1; }
+body.bk-section-colors.theme-dark .nav-folder-title[data-path^="4."]:not([data-path*="/"]) .nav-folder-title-content { color: #BFBED1; }
+
 /* Search input — recessed with gold focus */
 .search-input-container input,
 .workspace-leaf input[type="text"] {
@@ -1155,6 +1306,11 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
 /* obsidian-git segment rides the gold (AA ink per scheme) */
 .status-bar-item.plugin-obsidian-git { color: var(--bk-stardust-ink); }
 .theme-dark .status-bar-item.plugin-obsidian-git { color: var(--bk-stardust); }
+
+/* Word count as Stardust — writing accumulates ✦ */
+.status-bar-item.plugin-wordcount { color: var(--bk-stardust-ink); }
+.theme-dark .status-bar-item.plugin-wordcount { color: var(--bk-stardust); }
+.status-bar-item.plugin-wordcount::before { content: '✦ '; }
 
 /* --------------------------------------------------------------------------
    10. RIGHT SIDEBAR — backlinks, outline, tags
