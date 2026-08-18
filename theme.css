@@ -91,23 +91,23 @@ settings:
         step: 1
         format: px
     -
-        id: bk-star-studs
-        title: Pixel-star corners
-        description: Tiny ✦ stars at the corners of callouts. Title-only callouts get the top pair.
+        id: bk-no-star-studs
+        title: Hide pixel-star corners
+        description: The tiny ✦ stars at callout corners are on by default — toggle this ON to hide them.
         type: class-toggle
-        default: true
+        default: false
     -
-        id: bk-finis
-        title: Finis mark
-        description: A small ✦ ⬥ ✦ after the last block of a note in reading view — the page says it's done.
+        id: bk-no-finis
+        title: Hide finis mark
+        description: The ✦ ⬥ ✦ after a note's last block in reading view is on by default — toggle this ON to hide it.
         type: class-toggle
-        default: true
+        default: false
     -
-        id: bk-section-colors
-        title: Section-colored file explorer
-        description: Top-level vault sections carry their triad tint (Personal gold, Work ink-blue, Stories rose, Tabletop plum, Ren'py periwinkle). Files and subfolders stay plain ink.
+        id: bk-no-section-colors
+        title: Plain file explorer sections
+        description: Top-level vault sections carry their triad tint by default (Personal gold, Work ink-blue, Stories rose, Tabletop plum, Ren'py periwinkle). Toggle this ON for plain ink.
         type: class-toggle
-        default: true
+        default: false
     -
         id: bk-folder-dim
         title: Collapsed folder dimming
@@ -880,9 +880,9 @@ body.bk-plain-hr .markdown-source-view .HyperMD-hr::before {
 }
 .footnote-link { color: var(--bk-link); }
 
-/* Finis mark (Style Settings `bk-finis`, default on) — the page says it's
+/* Finis mark (on by default; Style Settings `bk-no-finis` hides) — the page says it's
    done. Direct-child chain keeps it out of embeds, canvas cards, backlinks. */
-body.bk-finis .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer::after {
+body:not(.bk-no-finis) .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer::after {
   content: '✦ ⬥ ✦';
   display: block;
   text-align: center;
@@ -1057,19 +1057,21 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
   border-radius: 0;
   padding: 12px 16px;
   background: color-mix(in srgb, rgb(var(--callout-color)) 13%, var(--bk-surface)) !important;
-  box-shadow: 0 0 0 var(--bk-keyline) rgb(var(--callout-color)), var(--bk-drop);
+  /* !important: Admonition tags processed callouts .admonition/.no-drop,
+     whose box-shadow rules outrank .callout in the cascade */
+  box-shadow: 0 0 0 var(--bk-keyline) rgb(var(--callout-color)), var(--bk-drop) !important;
   margin: 16px 0;
 }
-/* Pixel-star corners (Style Settings `bk-star-studs`, default on).
+/* Pixel-star corners (on by default; Style Settings `bk-no-star-studs` hides).
    Four pseudos spread across the callout's children, all positioned
    against .callout. Hosts are .callout / .callout-title / .callout-icon —
    NEVER .callout-content, which Obsidian makes a scroll container (pseudos
    there manifest as phantom scrollbars). Glyph font is Segoe UI Symbol:
    the embedded Silkscreen latin subset has no ✦ and renders a boxy plus. */
-body.bk-star-studs .callout::after,
-body.bk-star-studs .callout-title::before,
-body.bk-star-studs .callout-icon::before,
-body.bk-star-studs .callout-icon::after {
+body:not(.bk-no-star-studs) .callout::after,
+body:not(.bk-no-star-studs) .callout-title::before,
+body:not(.bk-no-star-studs) .callout-icon::before,
+body:not(.bk-no-star-studs) .callout-icon::after {
   content: '✦';
   position: absolute;
   font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
@@ -1079,10 +1081,10 @@ body.bk-star-studs .callout-icon::after {
   color: var(--bk-stud);
   pointer-events: none;
 }
-body.bk-star-studs .callout::after        { top: -7px;    left: -7px; }
-body.bk-star-studs .callout-title::before { top: -7px;    right: -7px; }
-body.bk-star-studs .callout-icon::before  { bottom: -7px; left: -7px; }
-body.bk-star-studs .callout-icon::after   { bottom: -7px; right: -7px; }
+body:not(.bk-no-star-studs) .callout::after        { top: -7px;    left: -7px; }
+body:not(.bk-no-star-studs) .callout-title::before { top: -7px;    right: -7px; }
+body:not(.bk-no-star-studs) .callout-icon::before  { bottom: -7px; left: -7px; }
+body:not(.bk-no-star-studs) .callout-icon::after   { bottom: -7px; right: -7px; }
 /* Three registers inside a callout, loud → quiet:
    chip (micro-caps type label) → title text (mixed-case pixel) → body (Literata).
    The 8px micro-caps treatment lives on the auto-derived chip, where a
@@ -1274,25 +1276,25 @@ body.bk-star-studs .callout-icon::after   { bottom: -7px; right: -7px; }
   filter: none !important;
 }
 
-/* Section-colored explorer (Style Settings `bk-section-colors`, default on).
+/* Section-colored explorer (on by default; Style Settings `bk-no-section-colors` reverts).
    Top-level sections only — the :not([data-path*="/"]) guard keeps subfolders
    plain. Text = AA ink-variant per scheme; band = triad base. Vault-specific
    by design (this is Ellene's map). */
-body.bk-section-colors .nav-folder-title[data-path^="0."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #E9B949; }
-body.bk-section-colors .nav-folder-title[data-path^="1."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #4E6A9B; }
-body.bk-section-colors .nav-folder-title[data-path^="2."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #CE8A92; }
-body.bk-section-colors .nav-folder-title[data-path^="3."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #6E4A6B; }
-body.bk-section-colors .nav-folder-title[data-path^="4."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #9AA0D4; }
-body.bk-section-colors.theme-light .nav-folder-title[data-path^="0."]:not([data-path*="/"]) .nav-folder-title-content { color: #91671A; }
-body.bk-section-colors.theme-light .nav-folder-title[data-path^="1."]:not([data-path*="/"]) .nav-folder-title-content { color: #3A4F77; }
-body.bk-section-colors.theme-light .nav-folder-title[data-path^="2."]:not([data-path*="/"]) .nav-folder-title-content { color: #A15661; }
-body.bk-section-colors.theme-light .nav-folder-title[data-path^="3."]:not([data-path*="/"]) .nav-folder-title-content { color: #543551; }
-body.bk-section-colors.theme-light .nav-folder-title[data-path^="4."]:not([data-path*="/"]) .nav-folder-title-content { color: #585D90; }
-body.bk-section-colors.theme-dark .nav-folder-title[data-path^="0."]:not([data-path*="/"]) .nav-folder-title-content { color: #EBCB85; }
-body.bk-section-colors.theme-dark .nav-folder-title[data-path^="1."]:not([data-path*="/"]) .nav-folder-title-content { color: #9EA6B5; }
-body.bk-section-colors.theme-dark .nav-folder-title[data-path^="2."]:not([data-path*="/"]) .nav-folder-title-content { color: #DCB2AD; }
-body.bk-section-colors.theme-dark .nav-folder-title[data-path^="3."]:not([data-path*="/"]) .nav-folder-title-content { color: #B49EA1; }
-body.bk-section-colors.theme-dark .nav-folder-title[data-path^="4."]:not([data-path*="/"]) .nav-folder-title-content { color: #BFBED1; }
+body:not(.bk-no-section-colors) .nav-folder-title[data-path^="0."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #E9B949; }
+body:not(.bk-no-section-colors) .nav-folder-title[data-path^="1."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #4E6A9B; }
+body:not(.bk-no-section-colors) .nav-folder-title[data-path^="2."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #CE8A92; }
+body:not(.bk-no-section-colors) .nav-folder-title[data-path^="3."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #6E4A6B; }
+body:not(.bk-no-section-colors) .nav-folder-title[data-path^="4."]:not([data-path*="/"]) { box-shadow: inset 3px 0 0 #9AA0D4; }
+body:not(.bk-no-section-colors).theme-light .nav-folder-title[data-path^="0."]:not([data-path*="/"]) .nav-folder-title-content { color: #91671A; }
+body:not(.bk-no-section-colors).theme-light .nav-folder-title[data-path^="1."]:not([data-path*="/"]) .nav-folder-title-content { color: #3A4F77; }
+body:not(.bk-no-section-colors).theme-light .nav-folder-title[data-path^="2."]:not([data-path*="/"]) .nav-folder-title-content { color: #A15661; }
+body:not(.bk-no-section-colors).theme-light .nav-folder-title[data-path^="3."]:not([data-path*="/"]) .nav-folder-title-content { color: #543551; }
+body:not(.bk-no-section-colors).theme-light .nav-folder-title[data-path^="4."]:not([data-path*="/"]) .nav-folder-title-content { color: #585D90; }
+body:not(.bk-no-section-colors).theme-dark .nav-folder-title[data-path^="0."]:not([data-path*="/"]) .nav-folder-title-content { color: #EBCB85; }
+body:not(.bk-no-section-colors).theme-dark .nav-folder-title[data-path^="1."]:not([data-path*="/"]) .nav-folder-title-content { color: #9EA6B5; }
+body:not(.bk-no-section-colors).theme-dark .nav-folder-title[data-path^="2."]:not([data-path*="/"]) .nav-folder-title-content { color: #DCB2AD; }
+body:not(.bk-no-section-colors).theme-dark .nav-folder-title[data-path^="3."]:not([data-path*="/"]) .nav-folder-title-content { color: #B49EA1; }
+body:not(.bk-no-section-colors).theme-dark .nav-folder-title[data-path^="4."]:not([data-path*="/"]) .nav-folder-title-content { color: #BFBED1; }
 
 /* Search input — recessed with gold focus */
 .search-input-container input,
