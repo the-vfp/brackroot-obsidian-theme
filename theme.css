@@ -270,6 +270,10 @@ body.bk-thin-frames {
   --font-interface-theme: var(--bk-font-pixel);
   --font-monospace-theme: var(--bk-font-pixel);
 
+  /* Reading measure — consumed by Obsidian's native centered-column
+     machinery (honors the "Readable line length" toggle) */
+  --file-line-width: 740px;
+
   /* Surfaces */
   --background-primary:               var(--bk-paper);
   --background-primary-alt:           var(--bk-surface);
@@ -551,7 +555,8 @@ body.bk-body-pixel .markdown-source-view .cm-em {
 .markdown-preview-view {
   font-family: var(--font-text-theme);
   line-height: 1.7;
-  max-width: var(--file-line-width, 740px);
+  /* Measure comes from --file-line-width (set in section 2) via Obsidian's
+     own centering — a max-width HERE pins the reading column to the left. */
 }
 
 /* Note title — pixel display */
