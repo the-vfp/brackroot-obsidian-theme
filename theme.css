@@ -1053,6 +1053,10 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
    -------------------------------------------------------------------------- */
 .callout {
   position: relative;   /* anchors the chip's star-stud pseudos */
+  /* Core sets overflow:hidden on .callout (collapse animation), which clips
+     the corner stars — an element's own overflow clips its own positioned
+     pseudos. Open it up; re-hide below while collapsed. */
+  overflow: visible !important;
   border: 0;
   border-radius: 0;
   padding: 12px 16px;
@@ -1085,6 +1089,9 @@ body:not(.bk-no-star-studs) .callout::after        { top: -7px;    left: -7px; }
 body:not(.bk-no-star-studs) .callout-title::before { top: -7px;    right: -7px; }
 body:not(.bk-no-star-studs) .callout-icon::before  { bottom: -7px; left: -7px; }
 body:not(.bk-no-star-studs) .callout-icon::after   { bottom: -7px; right: -7px; }
+/* Collapsed/animating callouts clip again so folding content can't spill
+   (the stars politely vanish while a callout is folded) */
+.callout.is-collapsed { overflow: hidden !important; }
 /* Three registers inside a callout, loud → quiet:
    chip (micro-caps type label) → title text (mixed-case pixel) → body (Literata).
    The 8px micro-caps treatment lives on the auto-derived chip, where a
