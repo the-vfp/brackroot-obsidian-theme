@@ -92,8 +92,8 @@ settings:
         format: px
     -
         id: bk-no-star-studs
-        title: Hide pixel-star corners
-        description: The tiny ✦ stars at callout corners are on by default — toggle this ON to hide them.
+        title: Hide star decorations
+        description: Callouts wear a sparkle vine along the bottom edge and a lone ✦ at the top-right corner, on by default — toggle this ON to hide both.
         type: class-toggle
         default: false
     -
@@ -1066,18 +1066,22 @@ body.bk-star-check .cm-s-obsidian input.task-list-item-checkbox:checked {
   box-shadow: 0 0 0 var(--bk-keyline) rgb(var(--callout-color)), var(--bk-drop) !important;
   margin: 16px 0;
 }
-/* Pixel-star corners (on by default; Style Settings `bk-no-star-studs` hides).
-   Four pseudos spread across the callout's children, all positioned
-   against .callout. Hosts are .callout / .callout-title / .callout-icon —
-   NEVER .callout-content, which Obsidian makes a scroll container (pseudos
-   there manifest as phantom scrollbars). Glyph font is Segoe UI Symbol:
-   the embedded Silkscreen latin subset has no ✦ and renders a boxy plus. */
-body:not(.bk-no-star-studs) .callout::after,
-body:not(.bk-no-star-studs) .callout-title::before,
-body:not(.bk-no-star-studs) .callout-icon::before,
-body:not(.bk-no-star-studs) .callout-icon::after {
+/* Star decorations (on by default; Style Settings `bk-no-star-studs` hides).
+   Pseudos anchor to .callout-title / .callout-icon, positioned against
+   .callout (position:relative + overflow:visible above are load-bearing).
+   NEVER host these on .callout-content — Obsidian makes it a scroll
+   container and pseudos there manifest as phantom scrollbars. Glyph font is
+   Segoe UI Symbol: the embedded Silkscreen subset has no ✦ (renders a boxy
+   plus). */
+/* Variant F ("she picked the vine"): one lone star at the top-right, and a
+   sparkle vine — dashed tendril with star buds shrinking into stardust —
+   curling along the bottom edge from the left corner. Two-tone gold baked
+   into the SVG (gold is constant across schemes by design). */
+body:not(.bk-no-star-studs) .callout-title::before {
   content: '✦';
   position: absolute;
+  top: -7px;
+  right: -7px;
   font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
   font-size: 10px;
   line-height: 1;
@@ -1085,10 +1089,16 @@ body:not(.bk-no-star-studs) .callout-icon::after {
   color: var(--bk-stud);
   pointer-events: none;
 }
-body:not(.bk-no-star-studs) .callout::after        { top: -7px;    left: -7px; }
-body:not(.bk-no-star-studs) .callout-title::before { top: -7px;    right: -7px; }
-body:not(.bk-no-star-studs) .callout-icon::before  { bottom: -7px; left: -7px; }
-body:not(.bk-no-star-studs) .callout-icon::after   { bottom: -7px; right: -7px; }
+body:not(.bk-no-star-studs) .callout-icon::before {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: -8px;
+  width: 150px;
+  height: 24px;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48'><path d='M18 26 Q 60 2 110 22 T 210 18 T 290 26' fill='none' stroke='%23E9B949' stroke-width='3' stroke-dasharray='7 5'/><path d='M16 8l4 10 10 4-10 4-4 10-4-10-10-4 10-4z' fill='%23C9952F'/><path d='M108 8l3 7.5 7.5 3-7.5 3-3 7.5-3-7.5-7.5-3 7.5-3z' fill='%23C9952F'/><path d='M208 6l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z' fill='%23E9B949'/><circle cx='260' cy='22' r='2.6' fill='%23E9B949'/><circle cx='290' cy='26' r='1.8' fill='%23F4D58A'/></svg>") left center / contain no-repeat;
+  pointer-events: none;
+}
 /* Collapsed/animating callouts clip again so folding content can't spill
    (the stars politely vanish while a callout is folded) */
 .callout.is-collapsed { overflow: hidden !important; }
