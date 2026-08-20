@@ -97,6 +97,12 @@ settings:
         type: class-toggle
         default: false
     -
+        id: bk-vine-family
+        title: Family-colored vine
+        description: Tint each callout's vine and star to its family color (rose vine on rose callouts, periwinkle on tips) instead of the default gold.
+        type: class-toggle
+        default: false
+    -
         id: bk-no-finis
         title: Hide finis mark
         description: The ✦ ⬥ ✦ after a note's last block in reading view is on by default — toggle this ON to hide it.
@@ -1097,6 +1103,32 @@ body:not(.bk-no-star-studs) .callout-icon::before {
   width: 150px;
   height: 24px;
   background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48'><path d='M18 26 Q 60 2 110 22 T 210 18 T 290 26' fill='none' stroke='%23E9B949' stroke-width='3' stroke-dasharray='7 5'/><path d='M16 8l4 10 10 4-10 4-4 10-4-10-10-4 10-4z' fill='%23C9952F'/><path d='M108 8l3 7.5 7.5 3-7.5 3-3 7.5-3-7.5-7.5-3 7.5-3z' fill='%23C9952F'/><path d='M208 6l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z' fill='%23E9B949'/><circle cx='260' cy='22' r='2.6' fill='%23E9B949'/><circle cx='290' cy='26' r='1.8' fill='%23F4D58A'/></svg>") left center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* Family-colored vine (Style Settings `bk-vine-family`): the baked-gold SVG
+   swaps for two mask layers so the two-tone effect survives in family colors
+   — tendril + stardust in the family base, star buds in the deeper title
+   ink, and the lone top-right star joins the family. Same geometry, same
+   300x48 viewBox, pixel-identical alignment. */
+body.bk-vine-family:not(.bk-no-star-studs) .callout-title::before {
+  color: var(--bk-co-title, var(--bk-stud));
+}
+body.bk-vine-family:not(.bk-no-star-studs) .callout-icon::before {
+  background: rgb(var(--callout-color));
+  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48'><path d='M18 26 Q 60 2 110 22 T 210 18 T 290 26' fill='none' stroke='black' stroke-width='3' stroke-dasharray='7 5'/><circle cx='260' cy='22' r='2.6' fill='black'/><circle cx='290' cy='26' r='1.8' fill='black'/></svg>") left center / contain no-repeat;
+          mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48'><path d='M18 26 Q 60 2 110 22 T 210 18 T 290 26' fill='none' stroke='black' stroke-width='3' stroke-dasharray='7 5'/><circle cx='260' cy='22' r='2.6' fill='black'/><circle cx='290' cy='26' r='1.8' fill='black'/></svg>") left center / contain no-repeat;
+}
+body.bk-vine-family:not(.bk-no-star-studs) .callout-icon::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: -8px;
+  width: 150px;
+  height: 24px;
+  background: var(--bk-co-title, var(--bk-ink-strong));
+  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48'><path d='M16 8l4 10 10 4-10 4-4 10-4-10-10-4 10-4z' fill='black'/><path d='M108 8l3 7.5 7.5 3-7.5 3-3 7.5-3-7.5-7.5-3 7.5-3z' fill='black'/><path d='M208 6l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z' fill='black'/></svg>") left center / contain no-repeat;
+          mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48'><path d='M16 8l4 10 10 4-10 4-4 10-4-10-10-4 10-4z' fill='black'/><path d='M108 8l3 7.5 7.5 3-7.5 3-3 7.5-3-7.5-7.5-3 7.5-3z' fill='black'/><path d='M208 6l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z' fill='black'/></svg>") left center / contain no-repeat;
   pointer-events: none;
 }
 /* Collapsed/animating callouts clip again so folding content can't spill
