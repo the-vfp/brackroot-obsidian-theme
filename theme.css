@@ -114,6 +114,12 @@ settings:
         type: class-toggle
         default: false
     -
+        id: bk-no-header-decor
+        title: Plain headers
+        description: Headers wear colored ornaments by default — rose rule + tucked ✦ on H2, a periwinkle star trail leading into H3, a gold ◆ before H4. Toggle ON for undecorated ink headers.
+        type: class-toggle
+        default: false
+    -
         id: bk-no-finis
         title: Hide finis mark
         description: The ✦ ⬥ ✦ after a note's last block in reading view is on by default — toggle this ON to hide it.
@@ -216,6 +222,10 @@ settings:
   --bk-code-string:   #566D3B;
   --bk-code-number:   #C06A22;
   --bk-code-function: var(--bk-stardust-ink);
+
+  /* Header ornaments (F system) — rose star on H2, periwinkle trail on H3 */
+  --bk-h2-star: #A15661;
+  --bk-h3-trail: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 24'><circle cx='5' cy='12' r='2.2' fill='%239AA0D4'/><path d='M17 6.5l1.6 3.9 3.9 1.6-3.9 1.6-1.6 3.9-1.6-3.9-3.9-1.6 3.9-1.6z' fill='%239AA0D4'/><path d='M40 3l2.5 6.5L49 12l-6.5 2.5L40 21l-2.5-6.5L31 12l6.5-2.5z' fill='%23585D90'/></svg>");
 }
 
 /* Ivory knob — de-yellowed warm paper (Style Settings, light only) */
@@ -277,6 +287,10 @@ body.bk-dusk.theme-light {
   --bk-code-string:   #A7B288;
   --bk-code-number:   #EAB17D;
   --bk-code-function: var(--bk-stardust-shimmer);
+
+  /* Header ornaments — night lifts (big trail star lifts, base stays) */
+  --bk-h2-star: #DCB2AD;
+  --bk-h3-trail: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 24'><circle cx='5' cy='12' r='2.2' fill='%239AA0D4'/><path d='M17 6.5l1.6 3.9 3.9 1.6-3.9 1.6-1.6 3.9-1.6-3.9-3.9-1.6 3.9-1.6z' fill='%239AA0D4'/><path d='M40 3l2.5 6.5L49 12l-6.5 2.5L40 21l-2.5-6.5L31 12l6.5-2.5z' fill='%23BFBED1'/></svg>");
 }
 
 /* --------------------------------------------------------------------------
@@ -650,12 +664,43 @@ body.bk-body-pixel .markdown-source-view .cm-em {
 .theme-dark .markdown-preview-view h1::before,
 .theme-dark .markdown-rendered h1::before { color: var(--bk-stardust); }
 
-/* H2 — 2px border rule */
+/* ── The F header system: ink text, colored ornaments ──
+   H2 = rose rule + tucked ✦ terminal · H3 = periwinkle star trail leading
+   into the text (F6 — "the heading arrives") · H4 = gold ◆ prefix.
+   Editor ornaments use padding + background instead of inline pseudo
+   content so CM6's cursor math never sees inserted characters. */
+
+/* H2 — rose rule, both modes */
 .markdown-preview-view h2,
 .markdown-rendered h2,
 .markdown-source-view .HyperMD-header-2 {
-  border-bottom: 2px solid var(--bk-border);
+  border-bottom: 2px solid #CE8A92;
   padding-bottom: 4px;
+  position: relative;
+}
+/* H2 tucked ✦ — sits on the rule at the right end, punching a paper gap */
+body:not(.bk-no-header-decor) .markdown-preview-view h2::after,
+body:not(.bk-no-header-decor) .markdown-rendered h2::after,
+body:not(.bk-no-header-decor) .markdown-source-view .HyperMD-header-2::after {
+  content: '✦';
+  position: absolute;
+  right: 0;
+  bottom: -7px;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+  font-size: 9px;
+  line-height: 1;
+  color: var(--bk-h2-star);
+  background: var(--background-primary);
+  padding-left: 6px;
+  pointer-events: none;
+}
+
+/* H3 — star trail (dust → star → title), padding + background both modes */
+body:not(.bk-no-header-decor) .markdown-preview-view h3,
+body:not(.bk-no-header-decor) .markdown-rendered h3,
+body:not(.bk-no-header-decor) .markdown-source-view .HyperMD-header-3 {
+  padding-left: 38px;
+  background: var(--bk-h3-trail) left center / 30px auto no-repeat;
 }
 
 /* H4–H6 — Silkscreen micro-labels */
@@ -664,6 +709,18 @@ body.bk-body-pixel .markdown-source-view .cm-em {
 .markdown-source-view :is(.HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6) {
   text-transform: uppercase;
   letter-spacing: var(--bk-micro-track);
+}
+/* H4 — gold ◆: glyph pseudo in reading view, padding+background in editor */
+body:not(.bk-no-header-decor) .markdown-preview-view h4::before,
+body:not(.bk-no-header-decor) .markdown-rendered h4::before {
+  content: '◆ ';
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+  font-size: 8px;
+  color: var(--bk-stardust-deep);
+}
+body:not(.bk-no-header-decor) .markdown-source-view .HyperMD-header-4 {
+  padding-left: 13px;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M6 0L12 6 6 12 0 6z' fill='%23C9952F'/></svg>") left center / 8px 8px no-repeat;
 }
 
 /* Highlight — gold wash with forced dark ink in BOTH schemes */
