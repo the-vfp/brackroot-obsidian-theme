@@ -151,6 +151,44 @@ settings:
         max: 70
         step: 1
     -
+        id: bk-section-wind
+        title: The Wind
+        type: heading
+        level: 2
+        collapsed: false
+    -
+        id: bk-no-wind
+        title: Still air
+        description: The Wind — a few pixel motes and the occasional ✦ drifting slowly behind your notes — blows by default. Toggle ON to still it.
+        type: class-toggle
+        default: false
+    -
+        id: bk-wind-density
+        title: Wind density
+        description: How much is on the wind. Calm is a whisper; Flurry is visible weather.
+        type: class-select
+        default: bk-wind-calm
+        allowEmpty: false
+        options:
+            -
+                label: Calm (default)
+                value: bk-wind-calm
+            -
+                label: Breezy
+                value: bk-wind-breezy
+            -
+                label: Flurry
+                value: bk-wind-flurry
+    -
+        id: bk-wind-strength
+        title: Wind strength
+        description: Opacity of the motes — from subliminal to clearly present.
+        type: variable-number-slider
+        default: 0.55
+        min: 0.1
+        max: 1
+        step: 0.05
+    -
         id: bk-section-accent
         title: Accent
         type: heading
@@ -241,6 +279,12 @@ settings:
   --bk-code-number:   #C06A22;
   --bk-code-function: var(--bk-stardust-ink);
 
+  /* The Wind — mote colors + calm star tile (day) */
+  --bk-mote-a: rgba(201,183,156,.5);
+  --bk-mote-b: rgba(201,149,47,.32);
+  --bk-mote-c: rgba(233,185,73,.28);
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23C9952F' opacity='.30'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%23E9B949' opacity='.35'/></svg>");
+
   /* Header ornaments (F system) — rose star on H2, periwinkle trail on H3 */
   --bk-h2-star: #A15661;
   --bk-h3-trail: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 24'><circle cx='5' cy='12' r='2.2' fill='%239AA0D4'/><path d='M17 6.5l1.6 3.9 3.9 1.6-3.9 1.6-1.6 3.9-1.6-3.9-3.9-1.6 3.9-1.6z' fill='%239AA0D4'/><path d='M40 3l2.5 6.5L49 12l-6.5 2.5L40 21l-2.5-6.5L31 12l6.5-2.5z' fill='%23585D90'/></svg>");
@@ -305,6 +349,12 @@ body.bk-dusk.theme-light {
   --bk-code-string:   #A7B288;
   --bk-code-number:   #EAB17D;
   --bk-code-function: var(--bk-stardust-shimmer);
+
+  /* The Wind after dark — periwinkle + shimmer motes */
+  --bk-mote-a: rgba(154,160,212,.4);
+  --bk-mote-b: rgba(244,213,138,.3);
+  --bk-mote-c: rgba(154,160,212,.32);
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23F4D58A' opacity='.4'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%239AA0D4' opacity='.45'/></svg>");
 
   /* Header ornaments — night lifts (big trail star lifts, base stays) */
   --bk-h2-star: #DCB2AD;
@@ -1944,6 +1994,98 @@ button.mod-warning {
 }
 table.dataview { border: var(--bk-keyline) solid var(--bk-border); }
 .dataview.small-text { color: var(--bk-ink-muted); }
+
+/* --------------------------------------------------------------------------
+   14b. THE WIND — the vault's breath. Two mote layers drifting laterally
+   behind note content (the pane backdrop, not over text): dust on
+   .view-content::before, stars with a vertical waver on the reading/source
+   wrappers' ::before. Transform-only animation on non-scrolling elements —
+   compositor work, zero layout/paint cost. W2 "star breeze", her pick.
+   -------------------------------------------------------------------------- */
+.theme-light, .theme-dark {
+  /* calm dust layout (density classes below swap in denser tiles) */
+  --bk-wind-dust:
+    radial-gradient(1.5px 1.5px at 60px 40px, var(--bk-mote-a) 99%, transparent),
+    radial-gradient(2px 2px at 210px 150px, var(--bk-mote-b) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 350px 90px, var(--bk-mote-a) 99%, transparent);
+}
+body.bk-wind-breezy {
+  --bk-wind-dust:
+    radial-gradient(1.5px 1.5px at 60px 40px, var(--bk-mote-a) 99%, transparent),
+    radial-gradient(2px 2px at 210px 150px, var(--bk-mote-b) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 350px 90px, var(--bk-mote-a) 99%, transparent),
+    radial-gradient(2px 2px at 120px 200px, var(--bk-mote-c) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 300px 20px, var(--bk-mote-a) 99%, transparent);
+}
+body.bk-wind-flurry {
+  --bk-wind-dust:
+    radial-gradient(1.5px 1.5px at 60px 40px, var(--bk-mote-a) 99%, transparent),
+    radial-gradient(2px 2px at 210px 150px, var(--bk-mote-b) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 350px 90px, var(--bk-mote-a) 99%, transparent),
+    radial-gradient(2px 2px at 120px 200px, var(--bk-mote-c) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 300px 20px, var(--bk-mote-a) 99%, transparent),
+    radial-gradient(2px 2px at 30px 130px, var(--bk-mote-b) 99%, transparent),
+    radial-gradient(1.5px 1.5px at 260px 70px, var(--bk-mote-a) 99%, transparent),
+    radial-gradient(1px 1px at 410px 190px, var(--bk-mote-c) 99%, transparent);
+}
+/* denser star tiles per scheme */
+body.bk-wind-breezy.theme-light {
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23C9952F' opacity='.30'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%23E9B949' opacity='.35'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%23C9952F' opacity='.28'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23E9B949' opacity='.3'/></svg>");
+}
+body.bk-wind-flurry.theme-light {
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23C9952F' opacity='.30'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%23E9B949' opacity='.35'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%23C9952F' opacity='.28'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23E9B949' opacity='.3'/><path d='M60 206l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%23E9B949' opacity='.3'/><path d='M321 116l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23C9952F' opacity='.26'/><circle cx='500' cy='60' r='1.2' fill='%23C9952F' opacity='.3'/><circle cx='40' cy='250' r='1.2' fill='%23E9B949' opacity='.3'/></svg>");
+}
+body.bk-wind-breezy.theme-dark {
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23F4D58A' opacity='.4'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%239AA0D4' opacity='.45'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%239AA0D4' opacity='.4'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23F4D58A' opacity='.38'/></svg>");
+}
+body.bk-wind-flurry.theme-dark {
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23F4D58A' opacity='.4'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%239AA0D4' opacity='.45'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%239AA0D4' opacity='.4'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23F4D58A' opacity='.38'/><path d='M60 206l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%23F4D58A' opacity='.38'/><path d='M321 116l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%239AA0D4' opacity='.4'/><circle cx='500' cy='60' r='1.2' fill='%239AA0D4' opacity='.4'/><circle cx='40' cy='250' r='1.2' fill='%23F4D58A' opacity='.4'/></svg>");
+}
+
+body:not(.bk-no-wind) .view-content { position: relative; }
+body:not(.bk-no-wind) .view-content > .markdown-reading-view,
+body:not(.bk-no-wind) .view-content > .markdown-source-view { position: relative; }
+body:not(.bk-no-wind) .view-content::before,
+body:not(.bk-no-wind) .view-content > .markdown-reading-view::before,
+body:not(.bk-no-wind) .view-content > .markdown-source-view::before {
+  content: '';
+  position: absolute;
+  top: -24px; bottom: -24px; left: 0;
+  width: 200%;
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--bk-wind-strength, 0.55);
+}
+body:not(.bk-no-wind) .view-content::before {
+  background-image: var(--bk-wind-dust);
+  background-size: 440px 230px;
+  animation: bk-drift 85s linear infinite;
+}
+body:not(.bk-no-wind) .view-content > .markdown-reading-view::before,
+body:not(.bk-no-wind) .view-content > .markdown-source-view::before {
+  background-image: var(--bk-wind-stars);
+  background-size: 560px 280px;
+  animation: bk-breeze 130s linear infinite;
+}
+@keyframes bk-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes bk-breeze {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-12.5%, -5px); }
+  50%  { transform: translate(-25%, 0); }
+  75%  { transform: translate(-37.5%, 5px); }
+  100% { transform: translate(-50%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body:not(.bk-no-wind) .view-content::before,
+  body:not(.bk-no-wind) .view-content > .markdown-reading-view::before,
+  body:not(.bk-no-wind) .view-content > .markdown-source-view::before {
+    animation: none;   /* the motes hold still; the Wind rests */
+  }
+}
 
 /* --------------------------------------------------------------------------
    15. ODDS & ENDS
