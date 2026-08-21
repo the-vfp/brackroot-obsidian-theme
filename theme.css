@@ -843,9 +843,11 @@ body:not(.bk-no-header-decor) .markdown-source-view .HyperMD-header-4 {
 .metadata-property-key .metadata-property-icon { color: var(--bk-stardust-deep); }
 .metadata-property-key input.metadata-property-key-input,
 .metadata-property-key {
-  font-family: var(--bk-font-micro);
-  font-size: var(--bk-micro-size);
-  letter-spacing: var(--bk-micro-track);
+  /* reading-size keys (her call) — same face and size as the values,
+     uppercase + gold keeps the ledger-label identity */
+  font-family: var(--bk-font-pixel);
+  font-size: 15px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--bk-link);
 }
