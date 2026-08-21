@@ -114,6 +114,16 @@ settings:
         type: class-toggle
         default: false
     -
+        id: bk-propkey-size
+        title: Property name size
+        description: Size of the gold key names in the frontmatter ledger. 13 sits between the values (15) and the old micro labels (8).
+        type: variable-number-slider
+        default: 13
+        min: 9
+        max: 16
+        step: 1
+        format: px
+    -
         id: bk-no-header-decor
         title: Plain headers
         description: Headers wear colored ornaments by default — rose rule + tucked ✦ on H2, a periwinkle star trail leading into H3, a gold ◆ before H4. Toggle ON for undecorated ink headers.
@@ -791,14 +801,27 @@ body:not(.bk-no-header-decor) .markdown-source-view .HyperMD-header-4 {
    keys, dashed hairlines between entries. */
 .metadata-container {
   background: transparent;
-  box-shadow:
-    0 -1px 0 0 var(--bk-ink-strong),
-    0 -4px 0 0 var(--bk-ink-strong),
-    0  1px 0 0 var(--bk-ink-strong),
-    0  4px 0 0 var(--bk-ink-strong);
+  position: relative;
+  /* True double hairlines: 1px borders + 1px pseudo strips 3px out.
+     (Stacked box-shadows render as a solid 4px bar — silhouettes don't
+     leave gaps.) */
+  border-top: 1px solid var(--bk-ink-strong);
+  border-bottom: 1px solid var(--bk-ink-strong);
+  box-shadow: none;
   padding: 8px 6px 10px;
-  margin: 8px 0 30px;
+  margin: 10px 0 30px;
 }
+.metadata-container::before,
+.metadata-container::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--bk-ink-strong);
+  pointer-events: none;
+}
+.metadata-container::before { top: -4px; }
+.metadata-container::after  { bottom: -4px; }
 /* Centered ✦ PROPERTIES ✦ header */
 .metadata-container .metadata-properties-heading,
 .metadata-properties-heading {
@@ -843,10 +866,10 @@ body:not(.bk-no-header-decor) .markdown-source-view .HyperMD-header-4 {
 .metadata-property-key .metadata-property-icon { color: var(--bk-stardust-deep); }
 .metadata-property-key input.metadata-property-key-input,
 .metadata-property-key {
-  /* reading-size keys (her call) — same face and size as the values,
-     uppercase + gold keeps the ledger-label identity */
+  /* Key size is a Style Settings slider (she tuned 8 → 15 → "a bit big";
+     dial, don't decide). Uppercase + gold keeps the ledger-label identity. */
   font-family: var(--bk-font-pixel);
-  font-size: 15px;
+  font-size: var(--bk-propkey-size, 13px);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--bk-link);
