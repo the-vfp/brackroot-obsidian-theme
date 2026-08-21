@@ -279,12 +279,13 @@ settings:
   --bk-code-number:   #C06A22;
   --bk-code-function: var(--bk-stardust-ink);
 
-  /* The Wind — mote colors + calm star tile (day). Deeper + more opaque
-     than night's: cream swallows subtle motes, plum flatters them. */
+  /* The Wind by day: indigo wax stars over warm gold dust ("obvious like
+     night" — her verdict from the live trial). One indigo dust speck ties
+     the thread. */
   --bk-mote-a: rgba(160,136,108,.6);
   --bk-mote-b: rgba(201,149,47,.5);
-  --bk-mote-c: rgba(201,149,47,.38);
-  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23C9952F' opacity='.5'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%23C9952F' opacity='.55'/></svg>");
+  --bk-mote-c: rgba(90,81,144,.4);
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%2341396E' opacity='.42'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%235A5190' opacity='.5'/></svg>");
 
   /* Header ornaments (F system) — rose star on H2, periwinkle trail on H3 */
   --bk-h2-star: #A15661;
@@ -2031,10 +2032,10 @@ body.bk-wind-flurry {
 }
 /* denser star tiles per scheme */
 body.bk-wind-breezy.theme-light {
-  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23C9952F' opacity='.5'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%23C9952F' opacity='.55'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%23C9952F' opacity='.46'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23C9952F' opacity='.5'/></svg>");
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%2341396E' opacity='.42'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%235A5190' opacity='.5'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%2341396E' opacity='.38'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%235A5190' opacity='.46'/></svg>");
 }
 body.bk-wind-flurry.theme-light {
-  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23C9952F' opacity='.5'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%23C9952F' opacity='.55'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%23C9952F' opacity='.46'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23C9952F' opacity='.5'/><path d='M60 206l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%23C9952F' opacity='.5'/><path d='M321 116l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23C9952F' opacity='.44'/><circle cx='500' cy='60' r='1.4' fill='%23C9952F' opacity='.5'/><circle cx='40' cy='250' r='1.4' fill='%23C9952F' opacity='.5'/></svg>");
+  --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%2341396E' opacity='.42'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%235A5190' opacity='.5'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%2341396E' opacity='.38'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%235A5190' opacity='.46'/><path d='M60 206l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%235A5190' opacity='.46'/><path d='M321 116l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%2341396E' opacity='.38'/><circle cx='500' cy='60' r='1.4' fill='%2341396E' opacity='.42'/><circle cx='40' cy='250' r='1.4' fill='%235A5190' opacity='.46'/></svg>");
 }
 body.bk-wind-breezy.theme-dark {
   --bk-wind-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='560' height='280' viewBox='0 0 560 280'><path d='M124 65.5l1.1 3.4 3.4 1.1-3.4 1.1-1.1 3.4-1.1-3.4-3.4-1.1 3.4-1.1z' fill='%23F4D58A' opacity='.4'/><path d='M383 177l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z' fill='%239AA0D4' opacity='.45'/><path d='M250 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1z' fill='%239AA0D4' opacity='.4'/><path d='M481 226l.9 2.7 2.7.9-2.7.9-.9 2.7-.9-2.7-2.7-.9 2.7-.9z' fill='%23F4D58A' opacity='.38'/></svg>");
