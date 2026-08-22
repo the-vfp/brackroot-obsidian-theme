@@ -1079,13 +1079,16 @@ body.bk-plain-hr .markdown-source-view .HyperMD-hr::before {
   margin: 14px 0;
 }
 /* Embed embellishment — the callout vine's little sibling: a lone TR star
-   and a short gold vine at the bottom-left. Same decor gate as callouts;
-   overflow opened for the same reason (own overflow clips own pseudos). */
+   and a short gold vine at the bottom-left. Hosted on the OUTER wrapper:
+   her embeds are mostly Bases views (.bases-embed), which never contain a
+   .markdown-embed element. Same decor gate as callouts; overflow opened
+   for the same reason (own overflow clips own pseudos). */
+body:not(.bk-no-star-studs) .internal-embed.is-loaded:not(.image-embed),
 body:not(.bk-no-star-studs) .markdown-embed {
   position: relative;
   overflow: visible !important;
 }
-body:not(.bk-no-star-studs) .markdown-embed::after {
+body:not(.bk-no-star-studs) .internal-embed.is-loaded:not(.image-embed)::after {
   content: '✦';
   position: absolute;
   top: -7px;
@@ -1096,7 +1099,7 @@ body:not(.bk-no-star-studs) .markdown-embed::after {
   color: var(--bk-stud);
   pointer-events: none;
 }
-body:not(.bk-no-star-studs) .markdown-embed::before {
+body:not(.bk-no-star-studs) .internal-embed.is-loaded:not(.image-embed)::before {
   content: '';
   position: absolute;
   bottom: -9px;
