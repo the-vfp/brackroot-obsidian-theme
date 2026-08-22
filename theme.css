@@ -1465,6 +1465,18 @@ body.bk-vine-family:not(.bk-no-star-studs) .callout-icon::after {
 /* Collapsed/animating callouts clip again so folding content can't spill
    (the stars politely vanish while a callout is folded) */
 .callout.is-collapsed { overflow: hidden !important; }
+
+/* Mobile: the phone app (WebKit + its own stylesheets) clips outside-the-box
+   pseudos at the callout edge regardless of overflow — so on phones the
+   star and vine live INSIDE the bounds, with reserved bottom padding so
+   the vine never underlaps text. Applies to gold and family-vine modes
+   alike (positions are shared). */
+body.is-mobile:not(.bk-no-star-studs) .callout { padding-bottom: 28px; }
+body.is-mobile:not(.bk-no-star-studs) .callout-title::before { top: 3px; right: 4px; }
+body.is-mobile:not(.bk-no-star-studs) .callout-icon::before,
+body.is-mobile.bk-vine-family:not(.bk-no-star-studs) .callout-icon::after { bottom: 5px; left: 8px; }
+body.is-mobile:not(.bk-no-star-studs) .internal-embed.is-loaded:not(.image-embed)::after { top: 3px; right: 4px; }
+body.is-mobile:not(.bk-no-star-studs) .internal-embed.is-loaded:not(.image-embed)::before { bottom: 2px; left: 4px; }
 /* Three registers inside a callout, loud → quiet:
    chip (micro-caps type label) → title text (mixed-case pixel) → body (Literata).
    The 8px micro-caps treatment lives on the auto-derived chip, where a
