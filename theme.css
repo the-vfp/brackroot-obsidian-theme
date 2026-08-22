@@ -2092,6 +2092,59 @@ table.dataview { border: var(--bk-keyline) solid var(--bk-border); }
 .dataview.small-text { color: var(--bk-ink-muted); }
 
 /* --------------------------------------------------------------------------
+   14a2. BASES — THE LEDGER PROPER. Database views join the frontmatter's
+   bookkeeping language: double hairline rules bounding the table, gold
+   uppercase column keys (same register as property names), formula columns
+   in wax indigo (computed = sealed knowledge), stardust result counter,
+   row hover in gold wash.
+   -------------------------------------------------------------------------- */
+.bases-table-container {
+  border-top: 1px solid var(--bk-ink-strong);
+  border-bottom: 1px solid var(--bk-ink-strong);
+  box-shadow:
+    inset 0  4px 0 -3px var(--bk-ink-strong),
+    inset 0 -4px 0 -3px var(--bk-ink-strong);
+}
+.bases-table-header-name {
+  font-family: var(--bk-font-pixel);
+  font-size: var(--bk-propkey-size, 13px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bk-link);
+}
+.bases-thead .bases-tr { border-bottom: 2px solid var(--bk-ink-strong); }
+.bases-table-header-icon { color: var(--bk-ink-soft); opacity: .7; }
+.bases-table-header-sort { color: var(--bk-stardust-deep); }
+/* Formula columns — computed values wear the wax */
+.bases-table-header.mod-formula .bases-table-header-name { color: var(--bk-indigo-soft); }
+.theme-dark .bases-table-header.mod-formula .bases-table-header-name { color: #ABA1B2; }
+/* Rows — ledger entries: hairlines, alternating paper, gold hover wash */
+.bases-td { border-color: var(--bk-border); }
+.bases-tbody .bases-tr:nth-child(even) .bases-td { background: color-mix(in srgb, var(--bk-paper-deep) 55%, transparent); }
+.bases-tbody .bases-tr:hover .bases-td { background: color-mix(in srgb, var(--bk-stardust-soft) 60%, transparent); }
+.bases-table-cell { font-family: var(--bk-font-pixel); }
+/* Toolbar — chrome, not content */
+.bases-toolbar { font-family: var(--bk-font-pixel); }
+.bases-toolbar-result-count {
+  font-family: var(--bk-font-micro);
+  font-size: var(--bk-micro-size);
+  letter-spacing: var(--bk-micro-track);
+  text-transform: uppercase;
+  color: var(--bk-stardust-ink) !important;
+}
+.bases-toolbar-result-count * { color: inherit !important; }
+.theme-dark .bases-toolbar-result-count { color: var(--bk-stardust) !important; }
+.bases-toolbar-result-count::before {
+  content: '✦ ';
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+}
+.bases-toolbar-item:hover { color: var(--bk-ink-strong); background: var(--bk-stardust-soft); }
+/* Footer (+ New row) — a fresh ledger line */
+.bases-table-footer { color: var(--bk-ink-muted); font-family: var(--bk-font-pixel); }
+.bases-table-footer:hover { color: #4E3A2C; background: var(--bk-stardust-soft); }
+.bases-error { font-family: var(--bk-font-pixel); color: var(--bk-ink-muted); }
+
+/* --------------------------------------------------------------------------
    14b. THE WIND — the vault's breath. Two mote layers drifting laterally
    behind note content (the pane backdrop, not over text): dust on
    .view-content::before, stars with a vertical waver on the reading/source
