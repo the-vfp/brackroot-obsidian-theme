@@ -467,13 +467,18 @@ body.bk-thin-frames {
   --radius-s: 0; --radius-m: 0; --radius-l: 0; --radius-xl: 0;
   --clickable-icon-radius: 0;
 
-  --divider-color: var(--bk-border);
+  /* Dividers — invisible at rest (the softening): core paints pane
+     separators and resize handles with these; a soft gold whisper only
+     appears on hover for drag affordance */
+  --divider-color: transparent;
+  --divider-color-hover: color-mix(in srgb, var(--bk-stardust-deep) 50%, transparent);
   --divider-width: 1px;
 
-  /* Scrollbars — square */
+  /* Scrollbars — transparent at rest via core's own vars (core's
+     scrollbar rules outrank bare pseudo selectors) */
   --scrollbar-bg: transparent;
-  --scrollbar-thumb-bg: var(--bk-border);
-  --scrollbar-active-thumb-bg: var(--bk-stardust-deep);
+  --scrollbar-thumb-bg: transparent;
+  --scrollbar-active-thumb-bg: color-mix(in srgb, var(--bk-stardust-deep) 85%, transparent);
 
   /* Shadows — hard drops only */
   --shadow-s: var(--bk-drop);
@@ -2305,10 +2310,14 @@ body:not(.bk-no-crane) .multi-select-pill-remove-button {
 ::-webkit-scrollbar { width: 7px; height: 7px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-corner { background: transparent; }
-::-webkit-scrollbar-thumb { background: transparent; border-radius: 999px; }
-*:hover::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--bk-border) 70%, transparent); }
+::-webkit-scrollbar-thumb { background: transparent !important; border-radius: 999px !important; }
+body :hover::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--bk-border) 70%, transparent) !important; }
 ::-webkit-scrollbar-thumb:hover,
 ::-webkit-scrollbar-thumb:active { background: color-mix(in srgb, var(--bk-stardust-deep) 85%, transparent) !important; }
+/* Pane resize handles — invisible until touched */
+.workspace-leaf-resize-handle { background: transparent !important; border-color: transparent !important; }
+.workspace-leaf-resize-handle:hover { background: color-mix(in srgb, var(--bk-stardust-soft) 70%, transparent) !important; }
 
 /* Search-in-sidebar icons need their inset preserved */
 .search-input-container input[type="search"],
