@@ -1068,15 +1068,21 @@ body.bk-plain-hr .markdown-source-view .HyperMD-hr::before {
   font-style: italic;
 }
 
-/* Embeds / transclusions — surface card with ↳ Silkscreen header */
+/* Embeds / transclusions — FRAMELESS (her ruling: frames eat real estate).
+   Note transclusions get a slim rule + the ↳ marker; Bases embeds sit bare
+   on the paper — the ledger's own double rules are boundary enough. */
 .markdown-embed,
 .internal-embed.is-loaded:not(.image-embed) {
-  background: var(--bk-surface);
+  background: transparent;
   border: 0 !important;
-  box-shadow: 0 0 0 var(--bk-keyline) var(--bk-border), var(--bk-drop);
+  box-shadow: none;
   border-radius: 0;
-  padding: 12px 16px;
+  padding: 0;
   margin: 14px 0;
+}
+.markdown-embed {
+  border-left: 2px solid var(--bk-border) !important;
+  padding: 2px 0 2px 14px;
 }
 /* Embed embellishment — the callout vine's little sibling: a lone TR star
    and a short gold vine at the bottom-left. Hosted on the OUTER wrapper:
