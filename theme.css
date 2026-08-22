@@ -1123,18 +1123,15 @@ input[type="checkbox"].task-list-item-checkbox,
   border: 0 !important;
   background-color: var(--bk-surface) !important;
   background-image: none !important;
-  box-shadow:
-    0 0 0 2px var(--bk-ink-strong),
-    inset 2px 2px 0 0 var(--bk-shadow) !important;
+  /* C2 "hairline" (0.7.0): 1px soft-ink ring, inset dropped — de-chonked */
+  box-shadow: 0 0 0 1px var(--bk-ink-soft) !important;
   cursor: pointer;
   margin: 0 8px 0 0;
   vertical-align: -0.15em;
   transition: background-color .12s, box-shadow .12s;
 }
 input[type="checkbox"].task-list-item-checkbox:hover {
-  box-shadow:
-    0 0 0 2px var(--bk-stardust-deep),
-    inset 2px 2px 0 0 var(--bk-shadow) !important;
+  box-shadow: 0 0 0 1px var(--bk-stardust-deep) !important;
 }
 input[type="checkbox"].task-list-item-checkbox:checked,
 .markdown-preview-view input[type="checkbox"].task-list-item-checkbox:checked,
@@ -1144,7 +1141,7 @@ input[type="checkbox"].task-list-item-checkbox:checked,
   background-size: 70% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+  box-shadow: 0 0 0 1px var(--bk-ink-strong) !important;
   animation: bk-hop .18s steps(2, end);
 }
 @keyframes bk-hop {
@@ -1197,7 +1194,7 @@ body.bk-check-seal .HyperMD-task-line[data-task="x" i] input.task-list-item-chec
   background-size: 66% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+  box-shadow: 0 0 0 1px var(--bk-ink-strong) !important;
 }
 /* Extended states — each gets a triad fill (no strikethrough on these) */
 .markdown-preview-view li[data-task="?"] input.task-list-item-checkbox,
@@ -1209,7 +1206,7 @@ body.bk-check-seal .HyperMD-task-line[data-task="x" i] input.task-list-item-chec
   background-size: 72% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+  box-shadow: 0 0 0 1px var(--bk-ink-strong) !important;
 }
 .markdown-preview-view li[data-task="!"] input.task-list-item-checkbox,
 .markdown-preview-view li[data-task="!"] input.task-list-item-checkbox:checked,
@@ -1220,7 +1217,7 @@ body.bk-check-seal .HyperMD-task-line[data-task="x" i] input.task-list-item-chec
   background-size: 72% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+  box-shadow: 0 0 0 1px var(--bk-ink-strong) !important;
 }
 .markdown-preview-view li[data-task="*"] input.task-list-item-checkbox,
 .markdown-preview-view li[data-task="*"] input.task-list-item-checkbox:checked,
@@ -1231,7 +1228,7 @@ body.bk-check-seal .HyperMD-task-line[data-task="x" i] input.task-list-item-chec
   background-size: 78% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+  box-shadow: 0 0 0 1px var(--bk-ink-strong) !important;
 }
 .markdown-preview-view li[data-task="i"] input.task-list-item-checkbox,
 .markdown-preview-view li[data-task="i"] input.task-list-item-checkbox:checked,
@@ -1242,7 +1239,7 @@ body.bk-check-seal .HyperMD-task-line[data-task="x" i] input.task-list-item-chec
   background-size: 68% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  box-shadow: 0 0 0 2px var(--bk-ink-strong) !important;
+  box-shadow: 0 0 0 1px var(--bk-ink-strong) !important;
 }
 /* Cancelled [-] — pewter, ✗ */
 .markdown-preview-view li[data-task="-"] input.task-list-item-checkbox,
@@ -1254,8 +1251,63 @@ body.bk-check-seal .HyperMD-task-line[data-task="x" i] input.task-list-item-chec
   background-size: 62% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  box-shadow: 0 0 0 2px #6E747A !important;
+  box-shadow: 0 0 0 1px #6E747A !important;
 }
+/* Wax splatter — when a task is SEALED (seal mode only), two indigo
+   droplets scatter and fade, pixel-stepped. Replays briefly when a note
+   opens with sealed tasks — a little opening flourish, same as Spark's
+   burst was. */
+body.bk-check-seal .markdown-preview-view li[data-task="x" i].task-list-item,
+body.bk-check-seal .markdown-rendered li[data-task="x" i].task-list-item {
+  position: relative;
+}
+body.bk-check-seal .markdown-preview-view li[data-task="x" i].task-list-item::before,
+body.bk-check-seal .markdown-preview-view li[data-task="x" i].task-list-item::after,
+body.bk-check-seal .markdown-rendered li[data-task="x" i].task-list-item::before,
+body.bk-check-seal .markdown-rendered li[data-task="x" i].task-list-item::after,
+body.bk-check-seal .HyperMD-task-line[data-task="x" i]::before,
+body.bk-check-seal .HyperMD-task-line[data-task="x" i]::after {
+  content: '';
+  position: absolute;
+  left: -16px; top: 4px;
+  width: 3px; height: 3px;
+  background: var(--bk-indigo);
+  opacity: 0;
+  pointer-events: none;
+}
+body.bk-check-seal .HyperMD-task-line[data-task="x" i]::before,
+body.bk-check-seal .HyperMD-task-line[data-task="x" i]::after { left: 4px; }
+body.bk-check-seal .markdown-preview-view li[data-task="x" i].task-list-item::before,
+body.bk-check-seal .markdown-rendered li[data-task="x" i].task-list-item::before,
+body.bk-check-seal .HyperMD-task-line[data-task="x" i]::before {
+  animation: bk-splat-l .5s steps(3, end);
+  box-shadow: -2px -5px 0 0 var(--bk-indigo-soft);
+}
+body.bk-check-seal .markdown-preview-view li[data-task="x" i].task-list-item::after,
+body.bk-check-seal .markdown-rendered li[data-task="x" i].task-list-item::after,
+body.bk-check-seal .HyperMD-task-line[data-task="x" i]::after {
+  animation: bk-splat-r .55s steps(3, end);
+  box-shadow: 5px -3px 0 0 var(--bk-indigo-soft);
+}
+@keyframes bk-splat-l {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  30%  { opacity: 1; transform: translate(-7px, -5px); }
+  100% { opacity: 0; transform: translate(-13px, -2px); }
+}
+@keyframes bk-splat-r {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  30%  { opacity: 1; transform: translate(9px, -6px); }
+  100% { opacity: 0; transform: translate(15px, -1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.bk-check-seal .markdown-preview-view li[data-task="x" i].task-list-item::before,
+  body.bk-check-seal .markdown-preview-view li[data-task="x" i].task-list-item::after,
+  body.bk-check-seal .markdown-rendered li[data-task="x" i].task-list-item::before,
+  body.bk-check-seal .markdown-rendered li[data-task="x" i].task-list-item::after,
+  body.bk-check-seal .HyperMD-task-line[data-task="x" i]::before,
+  body.bk-check-seal .HyperMD-task-line[data-task="x" i]::after { animation: none; }
+}
+
 /* Done / cancelled labels */
 .markdown-preview-view li.task-list-item.is-checked,
 .HyperMD-task-line[data-task="x"],
