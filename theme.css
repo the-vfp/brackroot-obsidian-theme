@@ -1709,9 +1709,17 @@ body:not(.bk-no-section-colors).theme-dark .nav-folder-title[data-path^="4."]:no
    -------------------------------------------------------------------------- */
 .workspace-tab-header-container { border: 0 !important; }
 .workspace-tab-header { border-radius: 0 !important; }
+/* Active tab — no outline (her call): a soft gold-washed lift plus a
+   thrown star before the title. Pinned tabs keep their ◆ instead. */
 .workspace-tab-header.is-active {
-  background: var(--bk-surface) !important;
-  box-shadow: inset 0 0 0 var(--bk-keyline) var(--bk-ink-strong);
+  background: color-mix(in srgb, var(--bk-stardust-soft) 45%, var(--bk-paper)) !important;
+  box-shadow: none;
+}
+.workspace-tab-header.is-active:not(.mod-pinned) .workspace-tab-header-inner-title::before {
+  content: '✦ ';
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+  font-size: 9px;
+  color: var(--bk-stardust-deep);
 }
 .workspace-tab-header:not(.is-active):hover {
   background: var(--bk-paper);
@@ -2290,10 +2298,16 @@ body:not(.bk-no-crane) .multi-select-pill-remove-button {
    -------------------------------------------------------------------------- */
 ::selection { background: var(--bk-selection); }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: var(--bk-border); border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: var(--bk-stardust-deep); }
+/* Scrollbars — the macOS philosophy (her call): no track, no resting bar.
+   The thumb materializes only while hovering the scrolling pane, and goes
+   gold under the cursor. */
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background: transparent; border-radius: 0; }
+*:hover::-webkit-scrollbar-thumb { background: var(--bk-border); }
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active { background: var(--bk-stardust-deep) !important; }
 
 /* Search-in-sidebar icons need their inset preserved */
 .search-input-container input[type="search"],
