@@ -189,6 +189,12 @@ settings:
         max: 1
         step: 0.05
     -
+        id: bk-no-crane
+        title: Native cursor
+        description: The paper crane cursor (patchwork body, star wake; gold-bodied over clickable things) flies by default. Toggle ON to return to the system cursor.
+        type: class-toggle
+        default: false
+    -
         id: bk-section-accent
         title: Accent
         type: heading
@@ -2139,6 +2145,37 @@ body:not(.bk-no-wind) .view-content > .markdown-source-view::before {
   body:not(.bk-no-wind) .view-content > .markdown-source-view::before {
     animation: none;   /* the motes hold still; the Wind rests */
   }
+}
+
+/* --------------------------------------------------------------------------
+   14c. THE PAPER CRANE — the cursor is a patchwork origami crane (cream
+   body, indigo wing, gold-soft tail) trailing two stars; over clickable
+   things its body turns stardust-gold. Beak = hotspot (2,4). Text keeps
+   the native I-beam for caret precision. Style Settings `bk-no-crane`
+   grounds it.
+   -------------------------------------------------------------------------- */
+body:not(.bk-no-crane) {
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M2 4 L7 2 L9 6 L18 1 L17 10 L30 12 L22 17 L12 16 Z' fill='%23FFFCF5' stroke='%234E3A2C' stroke-width='1.5'/><path d='M10 6 L17 2.5 L16.4 9 Z' fill='%235A5190' stroke='%234E3A2C' stroke-width='1.2'/><rect x='5.5' y='3.5' width='1.6' height='1.6' fill='%234E3A2C'/><path d='M17 10 L30 12 L22 17 L16 15.6 Z' fill='%23F8E7BC' stroke='%234E3A2C' stroke-width='1'/><path d='M22 22 l1.3 3.2 3.2 1.3 -3.2 1.3 -1.3 3.2 -1.3 -3.2 -3.2 -1.3 3.2 -1.3z' fill='%23C9952F'/><path d='M28.5 26.5 l.8 2 2 .8 -2 .8 -.8 2 -.8 -2 -2 -.8 2 -.8z' fill='%235A5190'/></svg>") 2 4, auto;
+}
+body:not(.bk-no-crane) a,
+body:not(.bk-no-crane) button,
+body:not(.bk-no-crane) .clickable-icon,
+body:not(.bk-no-crane) .internal-link,
+body:not(.bk-no-crane) .external-link,
+body:not(.bk-no-crane) .cm-hmd-internal-link,
+body:not(.bk-no-crane) a.tag,
+body:not(.bk-no-crane) .nav-file-title,
+body:not(.bk-no-crane) .nav-folder-title,
+body:not(.bk-no-crane) .workspace-tab-header,
+body:not(.bk-no-crane) .menu-item,
+body:not(.bk-no-crane) .suggestion-item,
+body:not(.bk-no-crane) .checkbox-container,
+body:not(.bk-no-crane) input[type="checkbox"],
+body:not(.bk-no-crane) .callout-fold,
+body:not(.bk-no-crane) .tree-item-self,
+body:not(.bk-no-crane) .metadata-add-button,
+body:not(.bk-no-crane) .multi-select-pill-remove-button {
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M2 4 L7 2 L9 6 L18 1 L17 10 L30 12 L22 17 L12 16 Z' fill='%23E9B949' stroke='%234E3A2C' stroke-width='1.5'/><path d='M10 6 L17 2.5 L16.4 9 Z' fill='%235A5190' stroke='%234E3A2C' stroke-width='1.2'/><rect x='5.5' y='3.5' width='1.6' height='1.6' fill='%234E3A2C'/><path d='M17 10 L30 12 L22 17 L16 15.6 Z' fill='%23F8E7BC' stroke='%234E3A2C' stroke-width='1'/><path d='M22 22 l1.3 3.2 3.2 1.3 -3.2 1.3 -1.3 3.2 -1.3 -3.2 -3.2 -1.3 3.2 -1.3z' fill='%23C9952F'/><path d='M28.5 26.5 l.8 2 2 .8 -2 .8 -.8 2 -.8 -2 -2 -.8 2 -.8z' fill='%235A5190'/></svg>") 2 4, pointer !important;
 }
 
 /* --------------------------------------------------------------------------
