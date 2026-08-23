@@ -2299,6 +2299,27 @@ body:not(.bk-no-crane) .multi-select-pill-remove-button {
 }
 
 /* --------------------------------------------------------------------------
+   14d. CLICK REACTIONS — the world answers the hand. While any mouse
+   button is down (:active bubbles to body), the crane DIVES toward the
+   click; everything clickable also gives a 1px press-dip.
+   -------------------------------------------------------------------------- */
+body:not(.bk-no-crane):active {
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><g transform='rotate(-16 10 10)'><path d='M2 4 L7 2 L9 6 L18 1 L17 10 L30 12 L22 17 L12 16 Z' fill='%23FFFCF5' stroke='%234E3A2C' stroke-width='1.5'/><path d='M10 6 L17 2.5 L16.4 9 Z' fill='%235A5190' stroke='%234E3A2C' stroke-width='1.2'/><rect x='5.5' y='3.5' width='1.6' height='1.6' fill='%234E3A2C'/><path d='M17 10 L30 12 L22 17 L16 15.6 Z' fill='%23F8E7BC' stroke='%234E3A2C' stroke-width='1'/></g><path d='M24 20 l1.5 3.6 3.6 1.5 -3.6 1.5 -1.5 3.6 -1.5 -3.6 -3.6 -1.5 3.6 -1.5z' fill='%23C9952F'/><path d='M29 24.5 l.9 2.2 2.2 .9 -2.2 .9 -.9 2.2 -.9 -2.2 -2.2 -.9 2.2 -.9z' fill='%235A5190'/><circle cx='30.5' cy='30.5' r='1.2' fill='%23E9B949'/></svg>") 2 4, auto;
+}
+button:active,
+.clickable-icon:active,
+a.tag:active,
+.nav-file-title:active,
+.nav-folder-title:active,
+.workspace-tab-header:active,
+.menu-item:active,
+.suggestion-item:active,
+.metadata-add-button:active,
+.bases-toolbar-item:active {
+  transform: translateY(1px);
+}
+
+/* --------------------------------------------------------------------------
    15. ODDS & ENDS
    -------------------------------------------------------------------------- */
 ::selection { background: var(--bk-selection); }
