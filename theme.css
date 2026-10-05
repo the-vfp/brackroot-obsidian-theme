@@ -275,6 +275,7 @@ settings:
   --bk-link:        var(--bk-stardust-ink);
   --bk-gold-live:   var(--bk-user-accent, var(--bk-stardust));
   --bk-selection:   rgba(65, 57, 110, .22);
+  --bk-row-hover:   var(--bk-stardust-soft);
   --bk-danger:      #9E3B3B;
   --bk-good:        #6E8A4E;
 
@@ -352,6 +353,8 @@ body.bk-dusk.theme-light {
   --bk-link:        var(--bk-user-accent, var(--bk-stardust));
   --bk-gold-live:   var(--bk-user-accent, var(--bk-stardust));
   --bk-selection:   rgba(90, 81, 144, .35);
+  /* Row hover: the cream wash blinds cream ink on plum — gold glaze instead */
+  --bk-row-hover:   color-mix(in srgb, var(--bk-stardust) 22%, transparent);
   --bk-danger:      #C9978C;
   --bk-good:        #A7B288;
 
@@ -528,7 +531,7 @@ body.bk-thin-frames {
   --table-header-background:       transparent;
   --table-header-background-hover: var(--bk-paper-deep);
   --table-header-color:            var(--bk-ink-soft);
-  --table-row-background-hover:    var(--bk-stardust-soft);
+  --table-row-background-hover:    var(--bk-row-hover);
   --table-row-alt-background:      var(--bk-paper-deep);
   --table-border-width:            1px;
   --table-border-color:            var(--bk-border);
@@ -2152,7 +2155,7 @@ table.dataview { border: var(--bk-keyline) solid var(--bk-border); }
 /* Rows — ledger entries: hairlines, alternating paper, gold hover wash */
 .bases-td { border-color: var(--bk-border); }
 .bases-tbody .bases-tr:nth-child(even) .bases-td { background: color-mix(in srgb, var(--bk-paper-deep) 55%, transparent); }
-.bases-tbody .bases-tr:hover .bases-td { background: color-mix(in srgb, var(--bk-stardust-soft) 60%, transparent); }
+.bases-tbody .bases-tr:hover .bases-td { background: color-mix(in srgb, var(--bk-row-hover) 60%, transparent); }
 .bases-table-cell { font-family: var(--bk-font-pixel); }
 /* Toolbar — chrome, not content */
 .bases-toolbar { font-family: var(--bk-font-pixel); }
